@@ -15,27 +15,23 @@ namespace Movies.Pages
 
         public void OnGet()
         {
-
+            Movies = MovieDatabase.All;
         }
 
         public void OnPost(string search, List<string> mpaa)
         {
+            Movies = MovieDatabase.All;
             if(search != null && mpaa.Count > 0)
-            {
-                Movies = MovieDatabase.Search(search);
-                Movies = MovieDatabase.FilterByMPAA(Movies, mpaa);
-            }
-            else if(search != null)
             {
                 Movies = MovieDatabase.Search(search);
             }
             else if(mpaa.Count > 0)
             {
-                Movies = MovieDatabase.FilterByMPAA(MovieDatabase.All, mpaa);
+                Movies = MovieDatabase.FilterByMPAA(Movies, mpaa);
             }
             else
             {
-                Movies = MovieDatabase.All;
+                Movies = MovieDatabase.FilterByMinIMDB(Movies, min);
             }
             
         }
